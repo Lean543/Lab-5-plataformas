@@ -1,15 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "double_list.h"
 
-
-typedef struct Node {
-
-    int data;
-
-    struct Node* prev;
-    struct Node* next;
-
-} Node;
 
 void insertbeginning(Node** cabeza, char data){
 
@@ -68,7 +60,7 @@ void insertfinaly(Node** cabeza, char data){
         return;
     }
 
-    Node* temp = *cabeza;   //Hace un nodo temporal que se le asigna la dirección de memoria del nodo head en ese momento (Hay 2 nodos head iguales pero con diferente nombre)
+    Node* temp = *cabeza;   //Hace un nodo temporal que se le asigna la dirección de memoria del nodo head en ese momento
 
     while (temp->next != NULL) {  // Recorre cada dirección al nodo posterior del posterior y así sucesivamente del nodo head, el que tenga esta dirección como null es el último nodo de la lista (tail)
 
@@ -82,11 +74,48 @@ void insertfinaly(Node** cabeza, char data){
 
 }
 
+void insertnode(Node** cabeza, char data, int position){
+
+    //Crea un nuevo nodo
+
+    Node * newNode = (Node *)malloc(sizeof(Node));
+    if (newNode == NULL){
+
+        printf("Falló reservando memoria\n");
+
+        return;
+
+    }
+
+    //Desde aquí asigna el nuevo nodo como head
+    //Asigna direcciones anterior y posterior del nuevo nodo head como null y asigna su data
+
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+
+    int z;
+
+    Node* temp = *cabeza;   //Hace un nodo temporal que se iguala al nodo head en ese momento
+
+    for (z = 1; z < position; z++){
+
+        temp = temp->next;
+
+    }
+
+    (temp->prev)->next = newNode;  
+
+    (temp->next)->prev = newNode;  
+
+    newNode->next = temp->next;
+    newNode->prev = temp;
+
+}
+
 void Printlistadelante(Node * cabeza) {
 
-    printf("Lista impresa hacia adelante:\n");
-
-    Node* temp = cabeza;   //Hace un nodo temporal que se iguala al nodo head en ese momento (Hay 2 nodos head iguales pero con diferente nombre)
+    Node* temp = cabeza;   //Hace un nodo temporal que se iguala al nodo head en ese momento
 
     while (temp->next != NULL) {  // Recorre cada dirección al nodo posterior del posterior y así sucesivamente del nodo head, el que tenga esta dirección como null es el último nodo de la lista (tail) y no imprime mas
 
@@ -97,6 +126,64 @@ void Printlistadelante(Node * cabeza) {
     }
 
 }
+
+void Eliminatenode(Node** cabeza, char dataeliminate){
+
+    Node* temp = *cabeza;
+
+    while (temp->next != NULL) {  
+
+        if (temp->data == dataeliminate){
+
+            if (*cabeza == NULL || temp == NULL) return;
+
+            if (*cabeza == temp) {
+                *cabeza = temp->next;
+            }
+
+            if (temp->next != NULL) {
+                (temp->next)->prev = temp->prev;
+            }
+
+            if (temp->prev != NULL) {
+                (temp->prev)->next = temp->next;
+            }
+
+            free(temp);
+
+            return;
+        }
+
+        temp = temp->next;
+
+    }
+
+}
+
+void Searchnode(Node ** cabeza, char datasearch) {
+
+    Node* temp = *cabeza;   //Hace un nodo temporal que se iguala al nodo head en ese momento
+
+    int y = 0;
+
+    printf("El nodo o nodos que contienen esa data son: \n");
+
+    while (temp->next != NULL) {  // Recorre cada dirección al nodo posterior del posterior y así sucesivamente del nodo head, el que tenga esta dirección como null es el último nodo de la lista (tail) y no imprime mas
+
+        y ++;
+
+        if (temp->data == datasearch){
+
+            printf("Nodo %d\n", y);
+        }
+
+        temp = temp->next;
+
+    }
+
+}
+
+
 
 void freelist(Node* head){
 
@@ -112,39 +199,4 @@ void freelist(Node* head){
 
     }
 
-}
-
-int main(){
-
-    int i;
-
-    Node * head = NULL; //nuevo nodo sin nada
-
-    //Se crea una lista doblemente enlazada agregando 3 nodos al inicio
-
-    for (i = 0; i <= 3; i++){
-
-        int data = 56;
-
-        insertbeginning(&head, data);
-
-    }
-
-    //Agrega 2 nodos al final
-
-    for (i = 0; i <= 2; i++){
-
-        int data = 77;
-
-        insertfinaly(&head, data);
-
-    }
-
-    //Imprimir lista
-
-    Printlistadelante(head);
-
-    freelist(head);
-
-    return 0;
 }
