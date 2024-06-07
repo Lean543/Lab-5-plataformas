@@ -140,6 +140,8 @@ void Eliminatenode(Node** cabeza, int dataeliminate){
                 (target->next)->prev = NULL;
 
                 *cabeza = target->next;
+                
+                free(target);
 
                 return;
 
