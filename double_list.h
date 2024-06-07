@@ -8,17 +8,19 @@ typedef struct Node {
 
 } Node;
 
-void insertbeginning(Node** cabeza, char data);
+void insertbeginning(Node** cabeza, int data);
 
-void insertfinaly(Node** cabeza, char data);
+void insertfinaly(Node** cabeza, int data);
 
-void Printlistadelante(Node * cabeza);
+void Printlistadelante(Node* cabeza);
 
-void Eliminatenode(Node** cabeza, char dataeliminate);
+void Eliminatenode(Node** cabeza, int dataeliminate);
 
-void Searchnode(Node** cabeza, char datasearch);
+void Searchnode(Node** cabeza, int datasearch);
 
-void insertnode(Node** cabeza, char data, int position);
+void insertnode(Node** cabeza, int data, int position);
+
+void Printlistatras(Node* cabeza);
 
 void freelist(Node* head);
 

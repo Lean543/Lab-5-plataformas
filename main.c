@@ -3,68 +3,77 @@
 
 int main(){
 
-    int i;
-
     Node * head = NULL; //nuevo nodo sin nada
 
-    //Se crea una lista doblemente enlazada agregando 3 nodos al inicio
+    //Se crea una lista doblemente enlazada con un nodo head
 
-    for (i = 0; i <= 3; i++){
+    int data = 1;
+    insertbeginning(&head, data);
 
-        int data = 56;
 
-        insertbeginning(&head, data);
-
-    }
-
-    //Agrega 2 nodos al final
-
-    for (i = 0; i <= 2; i++){
-
-        int data = 77;
-
-        insertfinaly(&head, data);
-
-    }
+    //inserta un nodo tail
+    data = 100;
+    insertfinaly(&head, data);
 
     //Imprimir lista original
-
     printf("Lista impresa hacia adelante:\n");
-
     Printlistadelante(head);
 
-    //Eliminar nodo por data
 
-    int dataeliminate = 56;
-
-    Eliminatenode(&head, dataeliminate);
-
-    //imprimir lista sin un nodo
-
-    printf("Lista impresa hacia adelante (Un nodo eliminado):\n");
-
-    Printlistadelante(head);
-
-    //Buscar nodo por data
-    
-    int datasearch = 77;
-
-    Searchnode(&head, datasearch);
-
-    //insertar nodo en una posición
-
-    int data = 88;
-
-    int position = 3;
-
+    //inserta un nodo en alguna posición
+    data = 364;
+    int position = 1;
     insertnode(&head, data, position);
 
-    printf("Lista impresa hacia adelante (Nuevo nodo insertado):\n");
+    //inserta un nodo en alguna posición
+    data = 221;
+    position = 2;
+    insertnode(&head, data, position);
 
+    //inserta un nodo en alguna posición
+    data = 74;
+    position = 0;
+    insertnode(&head, data, position);
+
+    //Imprimir lista
+    printf("Lista impresa hacia adelante:\n");
     Printlistadelante(head);
+
+
+    //Eliminar nodo por data
+    int dataeliminate = 221;
+    Eliminatenode(&head, dataeliminate);
+
+
+    //inserta un nodo en alguna posición
+    data = 55;
+    position = 2;
+    insertnode(&head, data, position);
+
+
+    //imprimir lista sin un nodo y un nodo mas
+    printf("Lista impresa hacia adelante (Un nodo eliminado y otro agregado):\n");
+    Printlistadelante(head);
+
+
+    //Buscar nodo por data
+    int datasearch = 364;
+    Searchnode(&head, datasearch);
+
+
+    //Imprimir lista hacia atrás
+    printf("Lista impresa hacia atrás (con nuevo nodo insertado):\n");
+    data = 55;
+    position = 4;
+    insertnode(&head, data, position);
+    Printlistatras(head);
+
+
+    //Buscar nodo por data
+    datasearch = 55;
+    Searchnode(&head, datasearch);
 
 
     freelist(head);
-
     return 0;
 }
